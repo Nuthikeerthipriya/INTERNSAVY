@@ -1,78 +1,65 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
+import java.util.Scanner;
 
-public class Currency_Converter extends JFrame {
-    private JLabel amountLabel, fromLabel, toLabel, resultLabel;
-    private JTextField amountField;
-    private JComboBox<String> fromComboBox, toComboBox;
-    private JButton convertButton;
-    private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-
-    private final String[] currencies = {"USD", "EUR", "JPY", "GBP", "CAD", "AUD", "CHF", "CNY","INR"};
-    private double[] exchangeRates = {1.00, 0.84, 109.65, 0.72, 1.27, 1.30, 0.92, 6.47,87.14};
-
-    public Currency_Converter() {
-        setTitle("Currency Converter");
-        setLayout(new GridLayout(4, 2));
-
-        amountLabel = new JLabel("Amount:");
-        add(amountLabel);
-
-        amountField = new JTextField();
-        add(amountField);
-
-        fromLabel = new JLabel("From:");
-        add(fromLabel);
-
-        fromComboBox = new JComboBox<>(currencies);
-        add(fromComboBox);
-
-        toLabel = new JLabel("To:");
-        add(toLabel);
-
-        toComboBox = new JComboBox<>(currencies);
-        add(toComboBox);
-
-        convertButton = new JButton("Convert");
-        add(convertButton);
-
-        resultLabel = new JLabel();
-        add(resultLabel);
-
-        convertButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    double amount = Double.parseDouble(amountField.getText());
-                    String fromCurrency = (String) fromComboBox.getSelectedItem();
-                    String toCurrency = (String) toComboBox.getSelectedItem();
-                    double exchangeRate = exchangeRates[getIndex(toCurrency)] / exchangeRates[getIndex(fromCurrency)];
-                    double result = amount * exchangeRate;
-                    resultLabel.setText(decimalFormat.format(result) + " " + toCurrency);
-                } catch (Exception ex) {
-                    resultLabel.setText("Invalid input");
-                }
-            }
-        });
-
-        setSize(300, 200);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    private int getIndex(String currency) {
-        for (int i = 0; i < currencies.length; i++) {
-            if (currency.equals(currencies[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
+public class temperature_con {
 
     public static void main(String[] args) {
-        new Currency_Converter();
+        Scanner sc = new Scanner(System.in);
+        double temperature;
+        int choice;
+        while (true) {
+            System.out.println("Choose conversion type: ");
+            System.out.println("1. Celsius to Fahrenheit");
+            System.out.println("2. Fahrenheit to Celsius");
+            System.out.println("3. Celsius to Kelvin");
+            System.out.println("4. kelvin to Celsius");
+            System.out.println("5. Kelvin to Fahrenheit");
+            System.out.println("6. Fahrenheit to Kelvin");
+            System.out.println("7. Exit");
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double CF = (temperature * 9 / 5) + 32;
+                    System.out.println(temperature + " Celsius is equal to " + CF + " Fahrenheit.");
+                    break;
+                case 2:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double FC = (temperature - 32) * 5 / 9;
+                    System.out.println(temperature + " Fahrenheit is equal to " + FC + " Celsius.");
+                    break;
+                case 3:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double CK = temperature + 273.15;
+                    System.out.println(temperature + " Celsius is equal to " + CK + " Kelvin.");
+                    break;
+                case 4:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double KC = temperature - 273.15;
+                    System.out.println(temperature + " Kelvin is equal to " + KC + " Celsius.");
+                    break;
+                case 5:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double KF = (temperature - 273.15) * 9 / 5 + 32;
+                    System.out.println(temperature + "Kelvin  is equal to " + KF + " Fahrenheit.");
+                    break;
+                case 6:
+                    System.out.println("Enter the temperature: ");
+                    temperature = sc.nextDouble();
+                    double FK = (temperature - 32) * 5 / 9 + 273.15;
+                    System.out.println(temperature + " Fahrenheit is equal to " + FK + " Kelvin.");
+                    break;
+                case 7:
+                    System.out.println("Thankyou for visiting");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
+            }
+        }
     }
 }
